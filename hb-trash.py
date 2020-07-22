@@ -3,7 +3,8 @@ import argparse
 
 
 def init_argparse():
-    parser = argparse.ArgumentParser(description="Tool to get ical or csv file")
+    parser = argparse.ArgumentParser(
+        description="Tool for getting the garbage collection dates in Bremen, Germany as ics or csv")
     action = parser.add_mutually_exclusive_group(required=True)
     action.add_argument("-i", "--ical", action="store_true", help="ical format")
     action.add_argument("-c", "--csv", action="store_true", help="csv")
@@ -16,9 +17,9 @@ def init_argparse():
 def get_data(format, args):
     r = requests.post(
         "https://web.c-trace.de/bremenabfallkalender/(S(bipsbtlhddavyhhnypfj2wwp))/abfallkalender/{}?abfall=".format(
-            format), params={ "strasse": str(args.street), "hausnr": str(args.nr)})
+            format), params={"strasse": str(args.street), "hausnr": str(args.nr)})
     csv_string = r.content.decode("ISO-8859-1")
-    with open("hb-trash.{}".format("ics" if format=="cal" else format), "w") as file:
+    with open("hb-trash.{}".format("ics" if format == "cal" else format), "w") as file:
         file.write(csv_string)
 
 
