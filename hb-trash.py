@@ -7,7 +7,7 @@ def init_argparse():
         description="Tool for getting the garbage collection dates in Bremen, Germany as ics or csv")
     action = parser.add_mutually_exclusive_group(required=True)
     action.add_argument("-i", "--ical", action="store_true", help="ical format")
-    action.add_argument("-c", "--csv", action="store_true", help="csv")
+    action.add_argument("-c", "--csv", action="store_true", help="csv format")
     # force to get an integer as value
     parser.add_argument("-s", "--street", type=str, help="Name of street")
     parser.add_argument("-n", "--nr", type=str, help="Street number")
