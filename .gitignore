@@ -143,3 +143,6 @@ cython_debug/
 # idea settings
 .idea/*
 *.csv
+*.ics
+bin/*
+lib/*
