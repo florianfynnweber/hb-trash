@@ -3,6 +3,8 @@ Tool for getting the garbage collection dates in Bremen, Germany as ics or csv
 ## Install
 ```bash
 git clone https://github.com/florianfynnweber/hb-trash.git
+virtualenv -p /usr/bin/python3 .
+source bin/activate
 pip install -r requirements.txt
 ```
 ## Usage
