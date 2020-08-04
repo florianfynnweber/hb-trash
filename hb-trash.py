@@ -15,7 +15,7 @@ def init_argparse():
     parser.add_argument("-d", "--dashboard", action="store_true")
     return parser.parse_args()
 def write(content):
-    print(content)
+    print(str(content))
     with open('nextpickup.json', "w") as file:
         json.dump(content,file)
 
@@ -29,7 +29,7 @@ def get_data(args):
     now = datetime.datetime.now()
     for line in content[1:]:
         date = datetime.datetime.strptime(line[0].split('"')[1], "%d.%m.%Y")
-        if (date - now).days > 0:
+        if (date - now).days > -1:
             break
     if line[0].split('"')[3] != "Papier / Gelber Sack":
         write({"date": date.strftime("%d.%m.%Y"), "type": 1, "lastupdate": now.strftime("%d.%m.%Y")})
