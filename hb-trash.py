@@ -32,9 +32,9 @@ def get_data(args):
         if (date - now).days > -1:
             break
     if line[0].split('"')[3] != "Papier / Gelber Sack":
-        write({"date": date.strftime("%d.%m.%Y"), "type": 1, "lastupdate": now.strftime("%d.%m.%Y")})
+        write({"date": date.strftime("%d.%m.%Y"), "type": 1, "lastupdate": now.strftime("%d.%m.%Y %k:%M:%S")})
     else:
-        write({"date": date.strftime("%d.%m.%Y"), "type": 2, "lastupdate": now.strftime("%d.%m.%Y")})
+        write({"date": date.strftime("%d.%m.%Y"), "type": 2, "lastupdate": now.strftime("%d.%m.%Y %k:%M:%S")})
 
 def check_args(args):
     get_data(args)
