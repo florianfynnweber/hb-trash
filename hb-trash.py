@@ -1,9 +1,9 @@
+import argparse
 import csv
-import os
+import datetime
+import json
 
 import requests
-import argparse
-import pandas as pd
 
 
 def init_argparse():
@@ -14,38 +14,31 @@ def init_argparse():
     parser.add_argument("-n", "--nr", type=str, help="Street number", required=True)
     parser.add_argument("-d", "--dashboard", action="store_true")
     return parser.parse_args()
-
+def write(content):
+    with open('nextpickup.json', "w") as file:
+        json.dump(content,file)
 
 def get_data(args):
     r = requests.post(
-        "https://web.c-trace.de/bremenabfallkalender/(S(bipsbtlhddavyhhnypfj2wwp))/abfallkalender/csv?abfall=", params={"strasse": str(args.street), "hausnr": str(args.nr)})
+        "https://web.c-trace.de/bremenabfallkalender/(S(bipsbtlhddavyhhnypfj2wwp))/abfallkalender/csv?abfall=",
+        params={"strasse": str(args.street), "hausnr": str(args.nr)})
     csv_string = r.content.decode("ISO-8859-1")
     lines = csv_string.splitlines()
     content = list(csv.reader(lines))
+    now = datetime.datetime.now()
     for line in content[1:]:
-        print(type(line))
-
-
-
-    #with open("hb-trash.csv", "w") as file:
-    #    file.write(csv_string)
-
-
-def writeNextPickup():
-    if os.path.exists("hb-trash.csv"):
-        df = pd.read_csv("hb-trash.csv")
-        tmp = df.to_json()
-        print(tmp)
-        with open("hb-trash.csv", "r") as file:
-            reader = csv.DictReader(file)
-            for line in reader:
-                print(list(line))
+        date = datetime.datetime.strptime(line[0].split('"')[1], "%d.%m.%Y")
+        print(date - now)
+        if (date - now).days > 0:
+            break
+    if line[0].split('"')[3] != "Papier / Gelber Sack":
+        write({"date": date.strftime("%d.%m.%Y"), "type": 1, "lastupdate": now.strftime("%d.%m.%Y")})
     else:
-        raise FileNotFoundError
-
+        write({"date": date.strftime("%d.%m.%Y"), "type": 2, "lastupdate": now.strftime("%d.%m.%Y")})
 
 def check_args(args):
     get_data(args)
+
 
 if __name__ == '__main__':
     check_args(init_argparse())
