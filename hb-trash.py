@@ -20,11 +20,15 @@ def get_data(args):
     r = requests.post(
         "https://web.c-trace.de/bremenabfallkalender/(S(bipsbtlhddavyhhnypfj2wwp))/abfallkalender/csv?abfall=", params={"strasse": str(args.street), "hausnr": str(args.nr)})
     csv_string = r.content.decode("ISO-8859-1")
-    df = pd.read_csv(csv_string)
-    tmp = df.to_json()
-    print(tmp)
-    with open("hb-trash.csv", "w") as file:
-        file.write(csv_string)
+    lines = csv_string.splitlines()
+    content = list(csv.reader(lines))
+    for line in content[1:]:
+        print(type(line))
+
+
+
+    #with open("hb-trash.csv", "w") as file:
+    #    file.write(csv_string)
 
 
 def writeNextPickup():
