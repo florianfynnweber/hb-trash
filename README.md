@@ -10,14 +10,12 @@ pip install -r requirements.txt
 ## Usage
 ```bash
 python3 hb-trash.py -h
-usage: hb-trash.py [-h] (-i | -c) [-s STREET] [-n NR]
+usage: hb-trash.py [-h] [-s STREET] [-n NR]
 
 Tool for getting the garbage collection dates in Bremen, Germany
 
 optional arguments:
   -h, --help            show this help message and exit
-  -i, --ical            ical format
-  -c, --csv             csv
   -s STREET, --street STREET
                         Name of street
   -n NR, --nr NR        Street number
