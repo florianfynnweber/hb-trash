@@ -2,6 +2,7 @@ import argparse
 import csv
 import datetime
 import json
+import os
 
 import requests
 
@@ -12,11 +13,11 @@ def init_argparse():
     # force to get an integer as value
     parser.add_argument("-s", "--street", type=str, help="Name of street", required=True)
     parser.add_argument("-n", "--nr", type=str, help="Street number", required=True)
-    parser.add_argument("-d", "--dashboard", action="store_true")
+    parser.add_argument("-p", "--path", type=str, help="Absolut path to nextpickup.json")
     return parser.parse_args()
-def write(content):
+def write(content, path):
     print(str(content))
-    with open('nextpickup.json', "w") as file:
+    with open(os.path.join(path,'nextpickup.json'), "w") as file:
         json.dump(content,file)
 
 def get_data(args):
@@ -32,9 +33,9 @@ def get_data(args):
         if (date - now).days > -1:
             break
     if line[0].split('"')[3] != "Papier / Gelber Sack":
-        write({"date": date.strftime("%d.%m.%Y"), "type": 1, "lastupdate": now.strftime("%d.%m.%Y %k:%M:%S")})
+        write({"date": date.strftime("%d.%m.%Y"), "type": 1, "lastupdate": now.strftime("%d.%m.%Y %k:%M:%S")}, args.path)
     else:
-        write({"date": date.strftime("%d.%m.%Y"), "type": 2, "lastupdate": now.strftime("%d.%m.%Y %k:%M:%S")})
+        write({"date": date.strftime("%d.%m.%Y"), "type": 2, "lastupdate": now.strftime("%d.%m.%Y %k:%M:%S")}, args.path)
 
 def check_args(args):
     get_data(args)

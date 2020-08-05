@@ -9,15 +9,14 @@ pip install -r requirements.txt
 ```
 ## Usage
 ```bash
-python3 hb-trash.py -h
-usage: hb-trash.py [-h] [-s STREET] [-n NR]
+usage: hb-trash.py [-h] -s STREET -n NR [-p PATH]
 
-Tool for getting the garbage collection dates in Bremen, Germany
+Tool for getting the garbage collection dates in Bremen, Germany as ics or csv
 
 optional arguments:
   -h, --help            show this help message and exit
   -s STREET, --street STREET
                         Name of street
   -n NR, --nr NR        Street number
-
+  -p PATH, --path PATH  Absolut path to nextpickup.json
 ```
